@@ -76,7 +76,7 @@ namespace AutoInstaller
         {
 
             label1.Text = $"Download genie2k files:{Environment.NewLine}";
-            var release = await _client.Repository.Release.GetLatest("regata-jinr", "");
+            var release = await _client.Repository.Release.GetLatest("regata-jinr", @"https://github.com/regata-jinr/AutoInstaller");
             var asset = release.Assets.Where(a => a.Name == "sources.zip").Last();
 
             using (var client = new WebClient())
