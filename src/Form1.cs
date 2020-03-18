@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Diagnostics;
 
-
 // TODO: the main problem below is authintefication via token?
 //      I don't need this because of all what I want to download is public.
 //      Also it looks to much complex, via ps it should looks more easier.
@@ -20,38 +19,32 @@ namespace AutoInstaller
 {
     public partial class Form1 : Form
     {
+        private ProcessStartInfo _installationProcessStartInfo;
         public Form1()
         {
             InitializeComponent();
-            RunCommand("set-executionpolicy", "remotesigned");
-            RunCommand("Invoke-WebRequest", @"-Uri https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/macro/auto.ps1 -OutFile auto.ps1");
+            RunCommand("powershell.exe", "set-executionpolicy Unrestricted");
+            RunCommand("powershell.exe", @"Invoke-WebRequest -Uri https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/macro/auto.ps1 -OutFile auto.ps1");
 
         }
 
     
-        private void RunCommand(string command, string args = "", bool background = true)
+        private void RunCommand(string command, string args = "")
         {
             using (var process = new Process())
             {
                 process.StartInfo.FileName = command;
                 process.StartInfo.Arguments = args;
-                process.StartInfo.UseShellExecute = !background;
-                process.StartInfo.RedirectStandardInput = background;
-                process.StartInfo.RedirectStandardOutput = background;
-                process.StartInfo.RedirectStandardError = background;
-                process.StartInfo.CreateNoWindow = background;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardInput = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.WorkingDirectory = AppContext.BaseDirectory;
-                //process.OutputDataReceived += Process_OutputDataReceived;
                 process.Start();
             }
         }
 
-        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            label1.Text += $"{Environment.NewLine}{e.Data}";
-        }
-
-    
         private void button1_Click(object sender, EventArgs e)
         {
             var lang = "eng";
@@ -61,7 +54,20 @@ namespace AutoInstaller
                 lang = "rus";
             if (radioButtonVers340.Checked)
                 vers = "3.4.0";
-            RunCommand("auto.ps1", $"-vers {vers} -lang {lang}");
+
+            _installationProcessStartInfo = new ProcessStartInfo();
+            _installationProcessStartInfo.FileName = "powershell.exe";
+            _installationProcessStartInfo.Arguments = $"-NoProfile -ExecutionPolicy unrestricted -File auto.ps1 -ArgumentList -lang {lang} -vers {vers}";
+
+            // powershell.exe -NoProfile -ExecutionPolicy unrestricted -File auto.ps1 -ArgumentList  -lang rus -vers 3.4.0
+
+            //          Start - Process
+            //- FilePath "powershell.exe"
+            // - ArgumentList "& 'C:\svn\Services\trunk\Services.In4m.Agent.Host\bin\agent.exe' --help; Read-Host"
+
+            _installationProcessStartInfo.WorkingDirectory = AppContext.BaseDirectory;
+
+            Process.Start(_installationProcessStartInfo);
         }
     }
 }
