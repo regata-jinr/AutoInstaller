@@ -30,7 +30,7 @@ Expand-Archive -Path $archName -DestinationPath .
 
 $pat = ("*" + $lang + ".iss")
 
-Write-Output "Setting lanugage"
+Write-Output ("Setting language as " + $lang)
 gci -Recurse *.iss | ForEach-Object { if ($_.Name.ToLower().Contains($lang)) { Rename-Item $_ "setup.iss" } }
 
 Write-Output "S504 GENIE-2000 InSpector Basic Spectroscopy installing..."
