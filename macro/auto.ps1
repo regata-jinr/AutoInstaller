@@ -13,7 +13,7 @@ New-Item -Type "Directory" .tmp
 
 cd .tmp
 
-$versionDict = @{"3.2.1" = "https://disk.jinr.ru/index.php/s/BjsEq2KXtFSdGDc/download"; "3.4.0" = "https://disk.jinr.ru/index.php/s/855yicC8f3QNC7d/download" }
+$versionDict = @{"3.2.1" = "https://disk.jinr.ru/index.php/s/X6DK44W7Fx2isEW/download"; "3.4.0" = "https://disk.jinr.ru/index.php/s/tjdgjkaDL99TXAj/download" }
 
 Write-Output "Welcome to the Regata Auto Installation process!"
 Write-Output ""
