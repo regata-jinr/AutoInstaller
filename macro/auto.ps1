@@ -2,7 +2,7 @@
 
 param([String]$vers = "3.2.1", [String]$lang = "eng")
 
-if !(Test-Path .tmp)
+if (-not (Test-Path .tmp))
 {
 	New-Item -Type "Directory" .tmp
 }
