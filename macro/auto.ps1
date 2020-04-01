@@ -26,9 +26,9 @@ Expand-Archive -Path $archName -DestinationPath .
 
 Write-Output ("Getting language settings...")
 
-Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s504" + $lang + ".iss") -OutFile ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.iss")
-Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s501" + $lang + ".iss") -OutFile ("S501\setup.iss")
-Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s506" + $lang + ".iss") -OutFile ("S506\setup.iss")
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2KV" + $vers + "/s504" + $lang + ".iss") -OutFile ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.iss")
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2KV" + $vers + "/s501" + $lang + ".iss") -OutFile ("S501\setup.iss")
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2KV" + $vers + "/s506" + $lang + ".iss") -OutFile ("S506\setup.iss")
 
 Write-Output "S504 GENIE-2000 InSpector Basic Spectroscopy installing..."
 Start-Process -Wait ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.exe") /s
