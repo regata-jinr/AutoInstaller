@@ -36,5 +36,12 @@ Start-Process -Wait ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.exe") /s
 Write-Output "S501 GENIE-2000 Gamma Analysis installing..."
 Start-Process -Wait .\S501\setup.exe /s
 
-Write-Output "S506 GENIE-2000 Interactive Peak Fit..."s
+Write-Output "S506 GENIE-2000 Interactive Peak Fit..."
 Start-Process -Wait .\S506\setup.exe /s
+
+cd ..
+
+if (Test-Path .tmp)
+{
+	rm .tmp -Recurse -Force -Confirm:$false
+}
