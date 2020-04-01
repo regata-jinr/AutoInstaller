@@ -1,19 +1,15 @@
-# TODO: check if genie already exist
-# TODO: choose version as parameter
-# TODO: dict with version and link
-# TODO: download files 
-# TODO: dict with language and rename function
-# TODO: move workprog to c
-
-# set-executionpolicy remotesigned
+# TODO: check if genie already installed
 
 param([String]$vers = "3.2.1", [String]$lang = "eng")
 
-New-Item -Type "Directory" .tmp
+if !(Test-Path .tmp)
+{
+	New-Item -Type "Directory" .tmp
+}
 
 cd .tmp
 
-$versionDict = @{"3.2.1" = "https://disk.jinr.ru/index.php/s/X6DK44W7Fx2isEW/download"; "3.4.0" = "https://disk.jinr.ru/index.php/s/tjdgjkaDL99TXAj/download" }
+$versionDict = @{"3.2.1" = "https://disk.jinr.ru/index.php/s/kWgZGP526mk5r4b/download"; "3.4.0" = "https://disk.jinr.ru/index.php/s/88SNe25nNJbJY4k/download" }
 
 Write-Output "Welcome to the Regata Auto Installation process!"
 Write-Output ""
@@ -28,13 +24,14 @@ Invoke-WebRequest -Uri $versionDict[$vers] -OutFile $archName
 Write-Output "Extracting files..."
 Expand-Archive -Path $archName -DestinationPath .
 
-$pat = ("*" + $lang + ".iss")
+Write-Output ("Getting language settings...")
 
-Write-Output ("Setting language as " + $lang)
-gci -Recurse *.iss | ForEach-Object { if ($_.Name.ToLower().Contains($lang)) { Rename-Item $_ "setup.iss" } }
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s504" + $lang + ".iss") -OutFile ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.iss")
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s501" + $lang + ".iss") -OutFile ("S501\setup.iss")
+Invoke-WebRequest -Uri ("https://raw.githubusercontent.com/regata-jinr/AutoInstaller/master/inis/G2V" + $vers + "/s506" + $lang + ".iss") -OutFile ("S506\setup.iss")
 
 Write-Output "S504 GENIE-2000 InSpector Basic Spectroscopy installing..."
-Start-Process -Wait .\S504\setup.exe /s
+Start-Process -Wait ("S500_502_504\Bin\G2KV" + $vers + "\S504\setup.exe") /s
 
 Write-Output "S501 GENIE-2000 Gamma Analysis installing..."
 Start-Process -Wait .\S501\setup.exe /s

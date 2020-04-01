@@ -4,6 +4,15 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net472</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>AutoInstaller.Program</StartupObject>
+    <Version>1.1.0</Version>
+    <PackageId>RegataAutoInstaller</PackageId>
+    <Authors>Boris Rumyantsev</Authors>
+    <Company>REGATA, FLNP, JINR</Company>
+    <Product />
+    <PackageProjectUrl>https://github.com/regata-jinr/AutoInstaller</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/regata-jinr/AutoInstaller</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

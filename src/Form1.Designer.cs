@@ -17,11 +17,12 @@
             {
                 components.Dispose();
                 RunCommand("set-executionpolicy", "default");
-                if (System.IO.Directory.Exists(".tmp"))
-                    System.IO.Directory.Delete(".tmp");
+               
 
             }
             base.Dispose(disposing);
+            if (System.IO.Directory.Exists(".tmp"))
+                System.IO.Directory.Delete(".tmp");
         }
 
         #region Windows Form Designer generated code
